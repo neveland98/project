@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Button, FormGroup, FormControl, FormLabel  } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.css'
 
-function App() {
+export default function Login(props) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function validateForm() {
+    return username.length > 0 && password.length > 0;
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+  <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}}>
+      <div className="Login">
+        <form onSubmit={handleSubmit}>
+          <FormGroup controlId="Username" bsSize="large">
+            <FormLabel >Username</FormLabel >
+            <FormControl
+              autoFocus
+              type="username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <FormLabel >Password</FormLabel >
+            <FormControl
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              type="password"
+            />
+          </FormGroup>
+          <Button block bsSize="large" disabled={!validateForm()} type="submit">
+            Login
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
-
-export default App;
