@@ -8,6 +8,7 @@ import axios from "axios";
 import {Paper} from '@material-ui/core';
 import {List} from '@material-ui/core';
 import { Link } from "react-router-dom";
+import IdleTimer from 'react-idle-timer';
 
 class Dashboard extends Component {
   constructor()
@@ -15,10 +16,43 @@ class Dashboard extends Component {
     super();
     this.state = 
     {
+      timeout:5000,
+      showModal: false,
+      userLoggedIn: false,
+      isTimedOut: false,
       apps: [],
       apps2: []
     }
+
+    this.idleTimer = null
+    this.onAction = this._onAction.bind(this)
+    this.onActive = this._onActive.bind(this)
+    this.onIdle = this._onIdle.bind(this)
   }
+
+  _onAction(e) {
+    console.log('user did something', e)
+    this.setState({isTimedOut: false})
+  }
+ 
+  _onActive(e) {
+    console.log('user is active', e)
+    this.setState({isTimedOut: false})
+  }
+ 
+  _onIdle(e) {
+    console.log('user is idle', e)
+    const isTimedOut = this.state.isTimedOut
+    if (isTimedOut) {
+        this.props.logoutUser();
+    } else {
+      this.setState({showModal: true})
+      this.idleTimer.reset();
+      this.setState({isTimedOut: true})
+    }
+    
+  }
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -60,6 +94,14 @@ render() {
 return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
+        <IdleTimer
+          ref={ref => { this.idleTimer = ref }}
+          element={document}
+          onActive={this.onActive}
+          onIdle={this.onIdle}
+          onAction={this.onAction}
+          debounce={250}
+          timeout={this.state.timeout} />
           <div className="col s12 center-align">
             <h4>
               <b>Hello,</b> {user.name.split(" ")[0]}
