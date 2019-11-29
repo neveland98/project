@@ -6,4 +6,4 @@ const AppSchema = new Schema({
   category: String,
   role_attributes: String
 });
-module.exports = App = mongoose.model("Apps", AppSchema);
+module.exports = App = mongoose.model("applications", AppSchema);

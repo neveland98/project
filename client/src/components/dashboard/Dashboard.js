@@ -2,14 +2,37 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { getItems } from "../../actions/getItems";
+import axios from "axios";
+
 class Dashboard extends Component {
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
+
+  state = {
+    apps: {},
+  }
+
+  componentDidMount()
+  {
+    
+  }
 render() {
     const { user } = this.props.auth;
-    console.log(user.attributes);
+    const input = 
+    {
+      role_attributes: user.attributes
+    }
+    axios
+      .post("/api/apps/links", user).then(res => {
+        this.setState({apps: res.data})
+      })
+      .catch(error => {
+        console.log(error.response)
+    });
+
 return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
