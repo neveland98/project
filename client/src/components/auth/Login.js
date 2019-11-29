@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import {Paper} from '@material-ui/core';
-import grey from '@material-ui/core/colors/grey';
+
 class Login extends Component {
   constructor() {
     super();
@@ -39,22 +39,22 @@ onSubmit = e => {
     e.preventDefault();
 const userData = {
       name: this.state.name,
-      password: this.state.password
+      password: this.state.password,
+      attributes: ""
     };
 this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
 render() {
     const { errors } = this.state;
 return (
-      <div className="container" style = {{backgroundColor:'#eeeeee', width: "100vw", height: "100vh"}}>
+      <div className="container-fluid" style = {{backgroundColor:'#eeeeee', width: "100vw", height: "100vh"}}>
             <Link to="/" className="btn-flat waves-effect">
-                <i className="material-icons left">keyboard_backspace</i> Back to
-                home
+                Back to home
             </Link>
-            <Paper style={{width:"80%", margin: "auto"}}>
+            <Paper style={{width:"40%", margin: "auto"}}>
                 <div style={{ marginTop: "4rem"}} className="row">
                     <div className="col s8 offset-s2">
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                        <div className="col s12" style={{ paddingLeft: "11.250px"}}>
                         <h4>
                             <b>Login</b> below
                         </h4>
@@ -101,7 +101,7 @@ return (
                                 borderRadius: "3px",
                                 letterSpacing: "1.5px",
                                 marginTop: "1rem",
-                                marginBottom: "1rem"
+                                marginBottom: "1rem",
                             }}
                             type="submit"
                             className="btn btn-large waves-effect waves-light hoverable blue accent-3"
