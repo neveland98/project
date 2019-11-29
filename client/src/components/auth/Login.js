@@ -47,16 +47,13 @@ this.props.loginUser(userData); // since we handle the redirect within our compo
 render() {
     const { errors } = this.state;
 return (
-      <div className="container-fluid" style = {{backgroundColor:'#eeeeee', width: "100vw", height: "100vh"}}>
-            <Link to="/" className="btn-flat waves-effect">
-                Back to home
-            </Link>
+      <div className="container-fluid" style = {{backgroundColor:'#eeeeee', width: "100vw", height: "100vh", overflow: "auto"}}>
             <Paper style={{width:"40%", margin: "auto"}}>
                 <div style={{ marginTop: "4rem"}} className="row">
                     <div className="col s8 offset-s2">
-                        <div className="col s12" style={{ paddingLeft: "11.250px"}}>
+                        <div className="col s12" style={{ textAlign: "center"}}>
                         <h4>
-                            <b>Login</b> below
+                            <b>Admin Portal Login</b>
                         </h4>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>
@@ -94,7 +91,7 @@ return (
                             {errors.passwordincorrect}
                             </span>
                         </div>
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                        <div className="col s12" style={{ textAlign: "center" }}>
                             <button
                             style={{
                                 width: "150px",

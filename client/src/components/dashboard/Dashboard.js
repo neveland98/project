@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { getItems } from "../../actions/getItems";
 import axios from "axios";
 import {Paper} from '@material-ui/core';
 import {List} from '@material-ui/core';
