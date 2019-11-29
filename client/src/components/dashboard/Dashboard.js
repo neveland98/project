@@ -6,7 +6,8 @@ import { logoutUser } from "../../actions/authActions";
 import { getItems } from "../../actions/getItems";
 import axios from "axios";
 import {Paper} from '@material-ui/core';
-import {List} from '@material-ui/core'
+import {List} from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
   constructor()
@@ -29,15 +30,16 @@ render() {
     {
       attributes: "ADMIN"
     }
+  
     axios
       .post("/api/apps/links", input).then(res => {
-        console.log(this.state)
         this.setState({apps: res.data})
       })
       .catch(error => {
         console.log(error.response)
     });
 
+    
     if (user.attributes !== "ADMIN")
     {
       let temp = 
@@ -46,7 +48,6 @@ render() {
       }
       axios
       .post("/api/apps/links", temp).then(res => {
-        console.log(this.state)
         this.setState({apps2: res.data})
       })
       .catch(error => {
@@ -69,10 +70,10 @@ return (
             <Paper>
             <ul>
               {this.state.apps.map(app => {
-                return <List key={`${app.id} and ${app.name}`}>{app.name}</List>
+                return <Link><List key={`${app.id} and ${app.name}`}>{app.name}</List></Link>
               })}
               {this.state.apps2.map(app => {
-                return <List key={`${app.id} and ${app.name}`}>{app.name}</List>
+                return <Link><List key={`${app.id} and ${app.name}`}>{app.name}</List></Link>
               })}
             </ul>
             </Paper>
