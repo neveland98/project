@@ -1,37 +1,60 @@
+// @ts-nocheck
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { getItems } from "../../actions/getItems";
 import axios from "axios";
+import {Paper} from '@material-ui/core';
+import {List} from '@material-ui/core'
 
 class Dashboard extends Component {
+  constructor()
+  {
+    super();
+    this.state = 
+    {
+      apps: [],
+      apps2: []
+    }
+  }
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
 
-  state = {
-    apps: {},
-  }
-
-  componentDidMount()
-  {
-    
-  }
 render() {
     const { user } = this.props.auth;
     const input = 
     {
-      role_attributes: user.attributes
+      attributes: "ADMIN"
     }
     axios
-      .post("/api/apps/links", user).then(res => {
+      .post("/api/apps/links", input).then(res => {
+        console.log(this.state)
         this.setState({apps: res.data})
       })
       .catch(error => {
         console.log(error.response)
     });
+
+    if (user.attributes !== "ADMIN")
+    {
+      let temp = 
+      {
+        attributes: "ADMIN,"+ user.attributes
+      }
+      axios
+      .post("/api/apps/links", temp).then(res => {
+        console.log(this.state)
+        this.setState({apps2: res.data})
+      })
+      .catch(error => {
+        console.log(error.response)
+    });
+    }
+
+    const items = this.state.apps.map(item => <li>{item}</li> );
 
 return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
@@ -43,6 +66,22 @@ return (
                 Welcome to the admin portal!
               </p>
             </h4>
+            <Paper>
+            <ul>
+              {this.state.apps.map(app => {
+                return <List key={`${app.id} and ${app.name}`}>{app.name}</List>
+              })}
+              {this.state.apps2.map(app => {
+                return <List key={`${app.id} and ${app.name}`}>{app.name}</List>
+              })}
+            </ul>
+            </Paper>
+
+            <Paper>
+
+            </Paper>
+
+
             <button
               style={{
                 width: "150px",
